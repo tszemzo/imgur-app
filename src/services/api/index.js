@@ -43,7 +43,7 @@ export class Api {
 
     // supplement headers
     headers = {
-      Accept: 'application/json',
+      Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
       ...headers,
     };
 
@@ -55,8 +55,6 @@ export class Api {
       data,
       params,
       responseType,
-      withCredentials: true,
-      // using defaults for responseType and xsrf
     })
       .then(response => {
         return responseType === null ? response.data : response;
