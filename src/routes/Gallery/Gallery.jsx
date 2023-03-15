@@ -14,11 +14,10 @@ function Gallery() {
     setLoading(true);    
     getGalleryImages()
       .then(images => {
-        console.log('images: ', images);
         setImages(images);
       })
       .catch(err => {
-        console.log('error fetching data from server: ', err);
+        console.log('Error fetching data from server: ', err);
       })
       .finally(() => {
         setLoading(false);
