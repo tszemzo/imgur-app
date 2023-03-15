@@ -24,7 +24,7 @@ function Gallery() {
       });
   }, []);
 
-  const onSearchClick = ({
+  const onSearchClick = async ({
     section,
     sort,
     window,
@@ -32,7 +32,7 @@ function Gallery() {
   }) => {
     try {
       setLoading(true);
-      const response = getGalleryImages(section, sort, window, showViral);
+      const response = await getGalleryImages(section, sort, window, showViral);
       setImages(response.data); 
     } catch (err) {
       console.log('Error fetching data from server: ', err); // Improve error handling
