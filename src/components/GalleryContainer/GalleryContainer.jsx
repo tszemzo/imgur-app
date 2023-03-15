@@ -1,4 +1,4 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, CircularProgress } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { getGalleryImages } from '../../services/images';
 import Gallery from '../Gallery/Gallery';
@@ -9,9 +9,10 @@ function GalleryContainer() {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
+    setLoading(true);    
     const response = getGalleryImages();
-    console.log('response: ', response.data);
     setImages(response.data);
+    setLoading(false);    
 
       // .then(images => {
       //   console.log('images: ', images);
@@ -19,6 +20,9 @@ function GalleryContainer() {
       // })
       // .catch(err => {
       //   console.log('error fetching data from server: ', err);
+      // })
+      // .finally(() => {
+      //   setLoading(false);
       // });
   }, []);
 
@@ -42,11 +46,18 @@ function GalleryContainer() {
   return (
     <Box
       component="section"
-      sx={{ display: 'flex', overflow: 'hidden', bgcolor: 'secondary.light' }}
+      sx={{ display: 'flex', overflow: 'hidden' }}
     >
       <Container sx={{ mt: 15, mb: 30 }}>
-        <GalleryFilters onSearchClick={onSearchClick} />
-        { loading ? <p>Loading...</p> : <Gallery images={images} /> }
+        <GalleryFilters onSearchClick={onSearchClick} loading={loading} />
+        { 
+          loading 
+            ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <CircularProgress />
+                </Box> 
+            )
+            : <Gallery images={images} /> }
       </Container>
     </Box>
   );

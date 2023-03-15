@@ -222,7 +222,7 @@ function getGalleryImages(section = SECTIONS.HOT, sort = SORT.VIRAL, window = WI
     {
         "id": "R7P2YZr",
         "title": "One mini-dump coming right up",
-        "description": null,
+        "description": 'a very very very very very very koasdasdndasijdsajidsajidsajidsaijdsaijdsajidsajisajdijisdaji jaidjsijdasjaids jdjasjidaj asdiajsdjaisjidasjidasjidsjiasij',
         "datetime": 1678800494,
         "cover": "ExECUwh",
         "cover_width": 1000,

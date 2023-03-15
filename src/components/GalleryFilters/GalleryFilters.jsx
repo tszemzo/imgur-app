@@ -11,14 +11,14 @@ import {
   Typography
 } from '@mui/material';
 
-const GalleryFilters = ({ onSearchClick }) => {
+const GalleryFilters = ({ onSearchClick, loading }) => {
   const [section, setSection] = useState(SECTIONS.HOT);
   const [sort, setSort] = useState(SORT.VIRAL);
   const [window, setWindow] = useState(WINDOW.DAY);
   const [showViral, setShowViral] = useState(true);
 
   return (
-    <Container>
+    <Container sx={{ mb: 5 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: 15 }}>
         <div>
           <InputLabel id="section-label">Section</InputLabel>
@@ -85,13 +85,13 @@ const GalleryFilters = ({ onSearchClick }) => {
         }
         <Button
           variant='contained'
+          disabled={loading}
           onClick={() => onSearchClick({ section, sort, window, showViral })}
         >
           Search
         </Button>
       </div>
     </Container>
-    
   )
 }
 
