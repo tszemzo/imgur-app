@@ -1,66 +1,33 @@
-import { Box, Container, CircularProgress } from '@mui/material';
-import { useState, useEffect } from 'react';
-import { getGalleryImages } from '../../services/images';
-import Gallery from '../Gallery/Gallery';
-import GalleryFilters from '../GalleryFilters/GalleryFilters';
+import _ from 'lodash';
 
-function GalleryContainer() {
-  const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState([]);
+import { useNavigate } from 'react-router-dom';
 
-  useEffect(() => {
-    setLoading(true);    
-    const response = getGalleryImages();
-    setImages(response.data);
-    setLoading(false);    
+import {
+  Grid,
+  Typography,
+} from '@mui/material';
 
-      // .then(images => {
-      //   console.log('images: ', images);
-      //   setImages(images);
-      // })
-      // .catch(err => {
-      //   console.log('error fetching data from server: ', err);
-      // })
-      // .finally(() => {
-      //   setLoading(false);
-      // });
-  }, []);
+const GalleryContainer = ({ images }) => {
+  const navigate = useNavigate();
 
-  const onSearchClick = ({
-    section,
-    sort,
-    window,
-    showViral,
-  }) => {
-    try {
-      setLoading(true);
-      const response = getGalleryImages(section, sort, window, showViral);
-      setImages(response.data); 
-    } catch (err) {
-      console.log('Error fetching data from server: ', err); // Improve error handling
-    } finally {
-      setLoading(false);
-    }
+  const handleImageClick = (image) => {
+    navigate(`/gallery/${image.id}`, { state: { image } });
   }
 
   return (
-    <Box
-      component="section"
-      sx={{ display: 'flex', overflow: 'hidden' }}
-    >
-      <Container sx={{ mt: 15, mb: 30 }}>
-        <GalleryFilters onSearchClick={onSearchClick} loading={loading} />
-        { 
-          loading 
-            ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <CircularProgress />
-                </Box> 
-            )
-            : <Gallery images={images} /> }
-      </Container>
-    </Box>
-  );
+    <Grid container spacing={2} justifyContent="space-between" alignItems='center'>
+      {
+        _.map(images, (image) => (
+          <Grid item key={image.id} maxWidth="350px" sx={{ textAlign: 'center' }}>
+            <img src={_.get(_.head(image.images), 'link')} alt="Not found" width="350" height="350" onClick={() => handleImageClick(image)} />
+            <Typography noWrap>
+              {image.description || 'No description'}
+            </Typography>
+          </Grid>
+        ))
+      }
+    </Grid>
+  )
 }
 
 export default GalleryContainer;
